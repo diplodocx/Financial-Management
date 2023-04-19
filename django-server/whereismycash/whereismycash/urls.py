@@ -15,12 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from manageCash.views import CategoryAPIList, PaymentAPIListCreate, PaymentAPIViewRetrieveUpdateDestroy
+from django.urls import path, include
+from manageCash.views import PaymentAPIListCreate, PaymentAPIViewRetrieveUpdateDestroy, CategoryViewSet
+from rest_framework import routers
+
+category_router = routers.DefaultRouter()
+category_router.register(r'category', CategoryViewSet)
+print(category_router.urls)
 
 urlpatterns = [
-    path('admin', admin.site.urls),
-    path('api/v1/cat', CategoryAPIList.as_view()),
-    path('api/v1/payment', PaymentAPIListCreate.as_view()),
-    path('api/v1/payment/<int:pk>', PaymentAPIViewRetrieveUpdateDestroy.as_view()),
+    path('admin/', admin.site.urls),
+    path('api/v1/', include(category_router.urls)),
+    path('api/v1/payment/', PaymentAPIListCreate.as_view()),
+    path('api/v1/payment/<int:pk>/', PaymentAPIViewRetrieveUpdateDestroy.as_view()),
 ]

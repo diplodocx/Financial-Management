@@ -36,4 +36,4 @@ class Payment(models.Model):
     Method = models.CharField(null=False, choices=METHOD_TYPES, max_length=255)
     Comment = models.TextField(default="-")
     Owner = models.ForeignKey('User', on_delete=models.PROTECT)
-    Category = models.ForeignKey('Category', on_delete=models.PROTECT)
+    Category = models.ForeignKey(Category, on_delete=models.PROTECT)

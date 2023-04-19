@@ -9,10 +9,23 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class PaymentSerializer(serializers.ModelSerializer):
+    Category = CategorySerializer()
+    # Owner = UserSerializer()
     class Meta:
         model = Payment
         fields = '__all__'
+
+class Joined(serializers.Serializer):
+    pass
+
 
 
 '''class CategorySerializer(serializers.ModelSerializer):
