@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from manageCash.views import ManageCashAPIView
+from manageCash.views import CategoryAPIList, PaymentAPIListCreate, PaymentAPIViewRetrieveUpdateDestroy
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/cat', ManageCashAPIView.as_view()),
+    path('admin', admin.site.urls),
+    path('api/v1/cat', CategoryAPIList.as_view()),
+    path('api/v1/payment', PaymentAPIListCreate.as_view()),
+    path('api/v1/payment/<int:pk>', PaymentAPIViewRetrieveUpdateDestroy.as_view()),
 ]
