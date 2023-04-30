@@ -1,8 +1,8 @@
 """create manager
 
-Revision ID: abc33674d0b0
+Revision ID: 943616cbe805
 Revises: 
-Create Date: 2023-04-30 16:15:29.766847
+Create Date: 2023-04-30 23:43:46.455075
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'abc33674d0b0'
+revision = '943616cbe805'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,9 +22,7 @@ def upgrade() -> None:
     sa.Column('category_id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('category_name', sa.String(length=200), nullable=False),
     sa.Column('payment_type', sa.String(length=10), nullable=False),
-    sa.PrimaryKeyConstraint('category_id'),
-    sa.UniqueConstraint('category_name'),
-    sa.UniqueConstraint('payment_type')
+    sa.PrimaryKeyConstraint('category_id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
@@ -33,6 +31,7 @@ def upgrade() -> None:
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('is_superuser', sa.Boolean(), nullable=False),
     sa.Column('is_verified', sa.Boolean(), nullable=False),
+    sa.Column('wallet', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )

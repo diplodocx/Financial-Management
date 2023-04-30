@@ -12,3 +12,4 @@ FastAPI-server/manager.db-journal
 FastAPI-server/.env
 FastAPI-server/src/auth/__pycache__
 FastAPI-server/__pycache__
+FastAPI-server/alembic/versions/__pycache__

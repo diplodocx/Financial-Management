@@ -12,15 +12,16 @@ user = db.Table(
     db.Column("email", db.String(200), unique=True, nullable=False),
     db.Column("is_active", db.Boolean, default=True, nullable=False),
     db.Column("is_superuser", db.Boolean, default=False, nullable=False),
-    db.Column("is_verified", db.Boolean, default=False, nullable=False)
+    db.Column("is_verified", db.Boolean, default=False, nullable=False),
+    db.Column("wallet", db.Float, default=0.0)
 )
 
 category = db.Table(
     "category",
     metadata,
     db.Column("category_id", db.Integer, autoincrement=True, primary_key=True),
-    db.Column("category_name", db.String(200), unique=True, nullable=False),
-    db.Column("payment_type", db.String(10), unique=True, nullable=False)
+    db.Column("category_name", db.String(200), nullable=False),
+    db.Column("payment_type", db.String(10), nullable=False)
 )
 
 payment = db.Table(
