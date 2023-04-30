@@ -10,11 +10,9 @@ class CategoryViewSet(ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-
 class PaymentAPIListCreate(APIView):
-    def get(self, request):
-        query = Payment.objects.select_related("Category")
-        return Response(PaymentSerializer(instance=query, many=True).data)
+    queryset = Category.objects.all()
+    serializer
 
 
 class PaymentAPIViewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):

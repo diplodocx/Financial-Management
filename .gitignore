@@ -4,3 +4,11 @@ django-server/whereismycash/manageCash/__pycache__
 django-server/whereismycash/whereismycash/__pycache__
 django-server/whereismycash/manageCash/migrations/__pycache__
 django-server/whereismycash/db.sqlite3
+FastAPI-server/src/manager/__pycache__
+FastAPI-server/alembic/__pycache__
+FastAPI-server/manager.db
+FastAPI-server/manager.db-journal
+.idea
+FastAPI-server/.env
+FastAPI-server/src/auth/__pycache__
+FastAPI-server/__pycache__
