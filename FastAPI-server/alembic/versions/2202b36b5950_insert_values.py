@@ -48,10 +48,10 @@ def upgrade() -> None:
         {'category_name': 'other', 'payment_type': 'receiving'}
     ])
     op.bulk_insert(payment, [
-        {'amount': 500.0, 'method': 'USD', 'owner': 1, 'category': 13},
-        {'amount': 300.0, 'method': 'USD', 'owner': 1, 'category': 15},
-        {'amount': 200.0, 'method': 'USD', 'owner': 1, 'category': 2},
-        {'amount': 600.0, 'method': 'USD', 'owner': 1, 'category': 1},
+        {'amount': 500.0, 'method': 'RUB', 'owner': 1, 'category': 13},
+        {'amount': 300.0, 'method': 'RUB', 'owner': 1, 'category': 15},
+        {'amount': 200.0, 'method': 'RUB', 'owner': 1, 'category': 2},
+        {'amount': 600.0, 'method': 'RUB', 'owner': 1, 'category': 1},
     ])
 
 
