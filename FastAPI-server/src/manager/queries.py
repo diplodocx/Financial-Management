@@ -105,3 +105,9 @@ async def update_wallet_on_delete(delta, owner_id, session: AsyncSession):
     old_value = res.fetchone()[-1]
     stmt = db.update(user).where(user.c.id == owner_id).values(wallet=old_value - delta)
     await session.execute(stmt)
+
+
+async def select_user_info(user_id, session: AsyncSession):
+    stmt = db.select(user).where(user.c.id == user_id)
+    res = await session.execute(stmt)
+    return res.mappings().fetchone()

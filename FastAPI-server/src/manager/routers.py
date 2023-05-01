@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_async_session
 import src.manager.queries as queries
-from .schemas import CategoryGet, PaymentGet, PaymentPost
+from .schemas import CategoryGet, PaymentGet, PaymentPost, WalletGet
 from typing import List
 
 manager = APIRouter(
@@ -35,6 +35,12 @@ async def retrieve_payment(payment_id: int, session: AsyncSession = Depends(get_
 async def get_payment(payment: PaymentPost, session: AsyncSession = Depends(get_async_session)):
     return await queries.insert_payment(payment, session)
 
+
 @manager.delete("/payment/{payment_id}")
 async def delete_payment(payment_id: int, session: AsyncSession = Depends(get_async_session)):
     return await queries.delete_payment(payment_id, session)
+
+
+@manager.get("/wallet/{user_id}", response_model=WalletGet)
+async def get_user(user_id: int, session: AsyncSession = Depends(get_async_session)):
+    return await queries.select_user_info(user_id, session)

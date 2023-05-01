@@ -40,3 +40,9 @@ class PaymentPost(BaseModel):
     comment: Optional[str]
     owner: int
     category: int
+
+
+class WalletGet(BaseModel):
+    wallet: float
+    email: str
+    id: int
