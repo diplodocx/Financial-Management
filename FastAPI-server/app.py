@@ -22,3 +22,7 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+
+@app.exception_handler(ValueError)
+async def value_error_handler(request, exc):
+    return JSONResponse(status_code=400, content={"msg": str(exc)})

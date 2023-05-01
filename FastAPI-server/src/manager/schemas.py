@@ -1,7 +1,10 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional, List
-from pydantic import BaseModel
+
+from fastapi import Depends
+from pydantic import BaseModel, validator
+from database import get_async_session
 
 
 class PaymentTypes(Enum):

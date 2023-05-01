@@ -41,6 +41,12 @@ async def insert_payment(payment_data, session: AsyncSession):
     delta = 1
     dict_data = payment_data.dict()
     dict_data["method"] = dict_data["method"].value
+    res = await validate_owner(dict_data["owner"], session)
+    if not res:
+        raise ValueError("No such user")
+    res = await validate_category(dict_data["category"], session)
+    if not res:
+        raise ValueError("No such category")
     stmt = db.insert(payment).values(**dict_data)
     await session.execute(stmt)
     stmt = db.select(category).where(category.c.category_id == dict_data.get("category"))
@@ -59,3 +65,14 @@ async def update_wallet_on_insert(delta, owner_id, session: AsyncSession):
     stmt = db.update(user).where(user.c.id == owner_id).values(wallet=old_value + delta)
     await session.execute(stmt)
 
+
+async def validate_owner(owner_id, session: AsyncSession):
+    stmt = db.select(user).where(user.c.id == owner_id)
+    res = await session.execute(stmt)
+    return res.fetchone()
+
+
+async def validate_category(category_id, session: AsyncSession):
+    stmt = db.select(category).where(category.c.category_id == category_id)
+    res = await session.execute(stmt)
+    return res.fetchone()

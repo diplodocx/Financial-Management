@@ -1,7 +1,6 @@
 from datetime import datetime
 from sqlalchemy.orm import relationship
 import sqlalchemy as db
-from .schemas import PaymentMethods
 
 metadata = db.MetaData()
 

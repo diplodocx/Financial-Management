@@ -34,3 +34,4 @@ async def retrieve_payment(payment_id: int, session: AsyncSession = Depends(get_
 @manager.post("/payment")
 async def get_payment(payment: PaymentPost, session: AsyncSession = Depends(get_async_session)):
     return await queries.insert_payment(payment, session)
+
