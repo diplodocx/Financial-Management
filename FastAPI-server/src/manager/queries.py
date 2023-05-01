@@ -85,7 +85,7 @@ async def delete_payment(payment_id, session: AsyncSession):
     res = await session.execute(stmt)
     element = res.fetchone()
     if not element:
-        raise ValueError("No such payment")
+        raise HTTPException(status_code=404, detail="Item not found")
     if element[2] == "spending":
         delta *= -1
     stmt = db.select(user, payment.c.amount).join(payment, user.c.id == payment.c.owner) \
