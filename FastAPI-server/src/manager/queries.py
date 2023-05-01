@@ -76,3 +76,32 @@ async def validate_category(category_id, session: AsyncSession):
     stmt = db.select(category).where(category.c.category_id == category_id)
     res = await session.execute(stmt)
     return res.fetchone()
+
+
+async def delete_payment(payment_id, session: AsyncSession):
+    delta = 1
+    stmt = db.select(category).join(payment, payment.c.category == category.c.category_id) \
+        .where(payment.c.payment_id == payment_id)
+    res = await session.execute(stmt)
+    element = res.fetchone()
+    if not element:
+        raise ValueError("No such payment")
+    if element[2] == "spending":
+        delta *= -1
+    stmt = db.select(user, payment.c.amount).join(payment, user.c.id == payment.c.owner) \
+        .where(payment.c.payment_id == payment_id)
+    res = await session.execute(stmt)
+    element = res.fetchone()
+    owner_id = element[0]
+    await update_wallet_on_delete(delta * element[-1], owner_id, session)
+    stmt = payment.delete().where(payment.c.payment_id == payment_id)
+    await session.execute(stmt)
+    await session.commit()
+
+
+async def update_wallet_on_delete(delta, owner_id, session: AsyncSession):
+    stmt = db.select(user).where(user.c.id == owner_id)
+    res = await session.execute(stmt)
+    old_value = res.fetchone()[-1]
+    stmt = db.update(user).where(user.c.id == owner_id).values(wallet=old_value - delta)
+    await session.execute(stmt)

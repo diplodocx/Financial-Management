@@ -35,3 +35,6 @@ async def retrieve_payment(payment_id: int, session: AsyncSession = Depends(get_
 async def get_payment(payment: PaymentPost, session: AsyncSession = Depends(get_async_session)):
     return await queries.insert_payment(payment, session)
 
+@manager.delete("/payment/{payment_id}")
+async def delete_payment(payment_id: int, session: AsyncSession = Depends(get_async_session)):
+    return await queries.delete_payment(payment_id, session)
