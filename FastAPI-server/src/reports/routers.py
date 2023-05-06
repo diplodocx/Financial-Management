@@ -1,9 +1,7 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from .database import get_session
-from .reports import make_report
-from sqlalchemy.orm.exc import NoResultFound
+from fastapi import APIRouter
 from fastapi import HTTPException
+from sqlalchemy.orm.exc import NoResultFound
+from .reports import make_report, send_report
 
 reports = APIRouter(prefix='/report', tags=['report'])
 
@@ -16,4 +14,5 @@ def get_reports(user_id: int):
         raise HTTPException(status_code=404)
     except:
         raise HTTPException(status_code=500)
+    send_report.delay(user_id)
     return {"detail": "task delegated"}

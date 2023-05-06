@@ -20,7 +20,6 @@ def select_last_report(user_id, session: Session):
     if not data:
         raise NoResultFound
     last_report = data[0]
-    update_last_report(user_id, last_report, session)
     return last_report
 
 
