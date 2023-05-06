@@ -1,8 +1,5 @@
 from typing import AsyncGenerator
-from fastapi import Depends
-from fastapi_users.db import SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from config import DB_USER, DB_PASS, DB_HOST, DB_PORT, DB_NAME
 
 DATABASE_URL = f"sqlite+aiosqlite:///manager.db"
 

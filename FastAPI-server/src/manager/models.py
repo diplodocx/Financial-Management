@@ -13,7 +13,8 @@ user = db.Table(
     db.Column("is_active", db.Boolean, default=True, nullable=False),
     db.Column("is_superuser", db.Boolean, default=False, nullable=False),
     db.Column("is_verified", db.Boolean, default=False, nullable=False),
-    db.Column("wallet", db.Float, default=0.0)
+    db.Column("wallet", db.Float, default=0.0),
+    db.Column("last_report", db.Integer, default=0)
 )
 
 category = db.Table(

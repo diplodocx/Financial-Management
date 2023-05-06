@@ -1,22 +1,17 @@
-import sqlalchemy as db
-from celery import Celery
 import pandas as pd
-from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import create_async_engine
-from src.manager.models import user, category, payment
+from celery import Celery
+from sqlalchemy.orm import Session
+from .database import get_session
+from .queries import select_payments, select_last_report
 
-from database import DATABASE_URL
+app = Celery('tasks', broker="redis://localhost:6379")
 
-celery = Celery('tasks', broker="redis://localhost:6379")
 
-@celery.task()
-def make_report(user_id):
-    engine = create_engine("sqlite:///manager.db")
-    with engine.begin() as conn:
-        stmt = db.select(payment).where(payment.c.owner == user_id)
-        result = conn.execute(stmt)
-        rows = result.fetchall()
-    df = pd.DataFrame(rows, columns=result.keys())
+@app.task()
+def make_report(user_id, session: Session = next(get_session())):
+    rows, columns = select_payments(user_id, session)
+    last_report = select_last_report(user_id, session)
+    print(last_report)
+    df = pd.DataFrame(rows, columns=columns)
     df['payment_time'] = df['payment_time'].apply(lambda x: x.strftime('%d.%m.%Y %H:%M:%S'))
-    print(df)
-    df.to_excel('data.xlsx', index=False)
+    df.to_excel(f'./src/reports/data/{user_id}_data_{last_report + 1}.xlsx', index=False)

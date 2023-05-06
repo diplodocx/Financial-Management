@@ -47,6 +47,7 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['owner'], ['user.id'], onupdate='CASCADE', ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('payment_id')
     )
+    op.add_column('user', sa.Column('last_report', sa.Integer(), nullable=True))
     # ### end Alembic commands ###
 
 

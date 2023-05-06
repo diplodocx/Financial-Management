@@ -14,3 +14,4 @@ FastAPI-server/src/auth/__pycache__
 FastAPI-server/__pycache__
 FastAPI-server/alembic/versions/__pycache__
 FastAPI-server/src/reports/__pycache__
+FastAPI-server/src/reports/data/*
